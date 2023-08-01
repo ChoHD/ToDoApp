@@ -24,6 +24,7 @@ public class TodoAppService {
     }
 
     public TodoApp createTodoApp(TodoApp toDoApp) {
+        verifyExistsTitle(toDoApp.getTitle());
         TodoApp savedTodoApp = todoAppRepository.save(toDoApp);
 
         return todoAppRepository.save(toDoApp);
@@ -56,5 +57,10 @@ public class TodoAppService {
        TodoApp findTodoApp = optionalTodoApp.orElseThrow(() -> new BusinessLogicException(ExceptionCode.TITLE_NOT_FOUND));
 
        return findTodoApp;
+    }
+    private void verifyExistsTitle(String tilte) {
+        Optional<TodoApp> member = todoAppRepository.findByTitle(tilte);
+        if (member.isPresent())
+            throw new BusinessLogicException(ExceptionCode.TITLE_NOT_FOUND);
     }
 }

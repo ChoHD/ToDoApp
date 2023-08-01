@@ -25,9 +25,9 @@ import java.util.List;
 @RestController
 @Validated
 @Slf4j
-@RequestMapping("/v1/todoapps")
+@RequestMapping
 public class TodoAppController {
-    private final static String TODOAPP_DEFAULT_URL = "/v1/todoapps";
+    private final static String TODOAPP_DEFAULT_URL = "";
     private final TodoAppService toDoAppService;
     private final TodoAppMapper todoAppMapper;
 
