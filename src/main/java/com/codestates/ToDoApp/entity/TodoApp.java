@@ -14,7 +14,7 @@ import javax.persistence.*;
 public class TodoApp {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long todoappId;
+    private Long todoappId;
 
 
     private String title;
