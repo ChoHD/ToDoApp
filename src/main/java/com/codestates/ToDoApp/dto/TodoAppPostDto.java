@@ -11,10 +11,7 @@ public class TodoAppPostDto {
     @NotBlank(message = "할일은 비어있으면 안됩니다.")
     private String title;
 
-    @NotBlank(message = "값이 비어 있으면 안됩니다.")
     private int todoorder;
 
-    @NotBlank(message = "ture 또는 false 값만 들어가야 합니다")
-    @Pattern(regexp = "^(true|false)$")
     private boolean completed;
 }

@@ -16,13 +16,13 @@ public class TodoApp {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long todoappId;
 
-    @Column(nullable = false, updatable = false, unique = true)
+
     private String title;
 
-    @Column(nullable = false)
+
     private int todoorder;
 
-    @Column(nullable = false)
+
     private boolean cpmpleted;
 
     public TodoApp(String title) {
