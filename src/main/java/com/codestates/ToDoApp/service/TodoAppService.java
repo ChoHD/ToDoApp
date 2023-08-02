@@ -19,25 +19,28 @@ public class TodoAppService {
 
 
     public TodoAppService(TodoAppRepository todoAppRepository) {
+
         this.todoAppRepository = todoAppRepository;
 
     }
 
     public TodoApp createTodoApp(TodoApp toDoApp) {
-        verifyExistsTitle(toDoApp.getTitle());
+
         TodoApp savedTodoApp = todoAppRepository.save(toDoApp);
 
         return todoAppRepository.save(toDoApp);
     }
     public TodoApp updateTodoApp(TodoApp todoApp) {
-       TodoApp findTodoApp = findVerifiedTodoApp(todoApp.getTodoappId());
+
+        TodoApp updatetodoapp = todoAppRepository.getReferenceById(todoApp.getId());
 
         Optional.ofNullable(todoApp.getTitle())
-                .ifPresent(title -> findTodoApp.setTitle(title));
+                .ifPresent(title -> updatetodoapp.setTitle(title));
         Optional.ofNullable(todoApp.getTodoorder())
-                .ifPresent(todoorder -> findTodoApp.setTodoorder(todoorder));
+                .ifPresent(todoorder -> updatetodoapp.setTodoorder(todoorder));
 
-        return todoAppRepository.save(findTodoApp);
+
+        return todoAppRepository.save(updatetodoapp);
     }
 
     public TodoApp readTodoApp(long todoappId) {
@@ -51,7 +54,7 @@ public class TodoAppService {
 
         todoAppRepository.delete(findTodoApp);
     }
-
+    @Transactional(readOnly = true)
     public TodoApp findVerifiedTodoApp(long todoappId) {
        Optional<TodoApp> optionalTodoApp = todoAppRepository.findById(todoappId);
        TodoApp findTodoApp = optionalTodoApp.orElseThrow(() -> new BusinessLogicException(ExceptionCode.TITLE_NOT_FOUND));
@@ -59,8 +62,8 @@ public class TodoAppService {
        return findTodoApp;
     }
     private void verifyExistsTitle(String tilte) {
-        Optional<TodoApp> member = todoAppRepository.findByTitle(tilte);
-        if (member.isPresent())
+        Optional<TodoApp> todoApp = todoAppRepository.findByTitle(tilte);
+        if (todoApp.isPresent())
             throw new BusinessLogicException(ExceptionCode.TITLE_NOT_FOUND);
     }
 }

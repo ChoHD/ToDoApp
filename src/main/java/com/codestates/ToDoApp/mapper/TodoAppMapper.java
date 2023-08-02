@@ -11,10 +11,10 @@ import org.mapstruct.ReportingPolicy;
 import javax.validation.Valid;
 import java.util.List;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface TodoAppMapper {
-    TodoApp todoappPostDtoToTodoapp(TodoAppPostDto todoAppPostDto);
-    TodoApp todoappPatchDtoToTodoapp(TodoAppPatchDto todoAppPatchDto);
-    TodoAppResponseDto todoappToTodoappResponseDto(TodoApp toDoApp);
-    List<TodoAppResponseDto> todoappsToTodoappResponseDtos(List<TodoApp> toDoApps);
+    TodoApp todoappPostToTodoApp(TodoAppDto.Post requsetBody);
+    TodoApp todoappPatchToTodoApp(TodoAppDto.Patch requestBody);
+    TodoAppDto.Response todoappToTodoAppResponse(TodoApp toDoApp);
+    List<TodoAppDto.Response> todoappsToTodoAppResponses(List<TodoApp> toDoApps);
 }

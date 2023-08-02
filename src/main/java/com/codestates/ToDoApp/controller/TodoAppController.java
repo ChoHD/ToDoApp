@@ -36,39 +36,46 @@ public class TodoAppController {
         this.todoAppMapper = todoAppMapper;
     }
     @PostMapping
-    public ResponseEntity postTodoapp(@Valid @RequestBody TodoAppPostDto todoAppPostDto) {
+    public ResponseEntity postTodoapp(@Valid @RequestBody TodoAppDto.Post requestBody) {
+        TodoApp todoApp = todoAppMapper.todoappPostToTodoApp(requestBody);
 
-        TodoApp todoApp = toDoAppService.createTodoApp(todoAppMapper.todoappPostDtoToTodoapp(todoAppPostDto));
-        URI loaction = UriCreator.createUri(TODOAPP_DEFAULT_URL, todoApp.getTodoappId());
+        TodoApp createTodoApp = toDoAppService.createTodoApp(todoApp);
+        URI loaction = UriCreator.createUri(TODOAPP_DEFAULT_URL, createTodoApp.getId());
 
         return ResponseEntity.created(loaction).build();
     }
 
-    @PatchMapping("/{todoapp-id}")
-    public ResponseEntity patchTodoApp(@PathVariable("todoapp-id")
-                                           @Positive long todoappId, @Valid @RequestBody TodoAppPatchDto todoAppPatchDto) {
+    @PatchMapping("/{id}")
+    public ResponseEntity patchTodoApp(
+            @PathVariable("id") @Positive long todoappId,
+            @RequestBody TodoAppDto.Patch requestBody) {
 
-        todoAppPatchDto.setTodoAppId(todoappId);
+        requestBody.setTodoAppId(todoappId);
 
-        TodoApp todoApp = toDoAppService.updateTodoApp(todoAppMapper.todoappPatchDtoToTodoapp(todoAppPatchDto));
+        TodoApp todoApp =
+                toDoAppService.updateTodoApp(todoAppMapper.todoappPatchToTodoApp(requestBody));
 
-        return new ResponseEntity<>(new SingleResponseDto<>(todoAppMapper.todoappToTodoappResponseDto(todoApp)), HttpStatus.OK);
+        return new ResponseEntity<>(
+                new SingleResponseDto<>(todoAppMapper.todoappToTodoAppResponse(todoApp)),HttpStatus.OK);
     }
 
-    @GetMapping("/{todoapp-id}")
-    public ResponseEntity readTodoApp(@PathVariable("todoapp-id") @Positive long todoappId) {
+    @GetMapping("/{id}")
+    public ResponseEntity readTodoApp(
+            @PathVariable("id") @Positive long todoappId) {
         TodoApp todoApp = toDoAppService.readTodoApp(todoappId);
 
-        return new ResponseEntity<>(new SingleResponseDto<>(todoAppMapper.todoappToTodoappResponseDto(todoApp)), HttpStatus.OK);
+       return new ResponseEntity<>(
+               new SingleResponseDto<>(todoAppMapper.todoappToTodoAppResponse(todoApp)), HttpStatus.OK);
     }
 
     @GetMapping
-    public ResponseEntity readTodoApps(@Positive @RequestParam int page, @Positive @RequestParam int size) {
+    public ResponseEntity readTodoApps(@Positive @RequestParam int page,
+                                       @Positive @RequestParam int size) {
         Page<TodoApp> pageTodoApps = toDoAppService.readTodoApps(page -1, size);
         List<TodoApp> todoApps = pageTodoApps.getContent();
 
-        return new ResponseEntity<>(
-                new MultiResponseDto<>(todoAppMapper.todoappsToTodoappResponseDtos(todoApps), pageTodoApps), HttpStatus.OK);
+       return new ResponseEntity<>(
+               new MultiResponseDto<>(todoAppMapper.todoappsToTodoAppResponses(todoApps), pageTodoApps), HttpStatus.OK);
 
     }
     @DeleteMapping("/{todoapp-id}")

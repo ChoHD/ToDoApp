@@ -12,20 +12,23 @@ import javax.persistence.*;
 @Setter
 @Entity
 public class TodoApp {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long todoappId;
-
+    private Long Id;
 
     private String title;
 
-
     private int todoorder;
 
-
-    private boolean cpmpleted;
+    private boolean completed;
 
     public TodoApp(String title) {
         this.title = title;
+    }
+    public TodoApp(String title, int todoorder, boolean completed) {
+        this.title = title;
+        this.todoorder = todoorder;
+        this.completed = completed;
     }
 }
