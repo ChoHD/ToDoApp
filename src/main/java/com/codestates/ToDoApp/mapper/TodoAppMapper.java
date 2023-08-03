@@ -11,7 +11,7 @@ import org.mapstruct.ReportingPolicy;
 import javax.validation.Valid;
 import java.util.List;
 
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
+@Mapper(componentModel = "spring")
 public interface TodoAppMapper {
     TodoApp todoappPostToTodoApp(TodoAppDto.Post requsetBody);
     TodoApp todoappPatchToTodoApp(TodoAppDto.Patch requestBody);

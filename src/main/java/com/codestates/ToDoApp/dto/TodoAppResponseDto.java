@@ -6,7 +6,7 @@ import lombok.Getter;
 @Builder
 @Getter
 public class TodoAppResponseDto {
-    private long Id;
+    private long todoappId;
     private String title;
     private int todoorder;
     private boolean completed;

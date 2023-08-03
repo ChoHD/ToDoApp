@@ -9,7 +9,7 @@ import javax.validation.constraints.Pattern;
 @Getter
 public class TodoAppPatchDto {
 
-    private long Id;
+    private long todoappId;
 
     private String title;
 
@@ -17,7 +17,15 @@ public class TodoAppPatchDto {
 
     private boolean completed;
 
-    public void setTodoAppId(long Id) {
-        this.Id = Id;
+    public void setTodoAppId(long todoappId) {
+        this.todoappId = todoappId;
+    }
+
+    public boolean isCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
     }
 }

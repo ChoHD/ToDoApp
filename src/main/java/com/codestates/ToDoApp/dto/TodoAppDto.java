@@ -1,6 +1,7 @@
 package com.codestates.ToDoApp.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 
 import javax.validation.constraints.NotBlank;
@@ -20,12 +21,10 @@ public class TodoAppDto {
     }
 
     @Getter
-    @AllArgsConstructor
     public static class Patch {
 
-        private long todoAppId;
+        private long todoappId;
 
-        @NotBlank(message = "할일은 비어있으면 안됩니다.")
         private String title;
 
         private int todoorder;
@@ -33,13 +32,13 @@ public class TodoAppDto {
         private boolean completed;
 
         public void setTodoAppId(long todoAppId) {
-            this.todoAppId = todoAppId;
+            this.todoappId = todoAppId;
         }
     }
-    @AllArgsConstructor
+    @Builder
     @Getter
     public static class Response {
-        private long todoAppId;
+        private long todoappId;
         private String title;
         private int todoorder;
         private boolean completed;

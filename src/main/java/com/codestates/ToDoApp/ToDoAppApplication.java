@@ -11,8 +11,9 @@ public class ToDoAppApplication extends SpringBootServletInitializer {
 	public static void main(String[] args) {
 		SpringApplication.run(ToDoAppApplication.class, args);
 	}
+
 	@Override
-	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) { // (2)
 		return builder.sources(ToDoAppApplication.class);
 	}
 
